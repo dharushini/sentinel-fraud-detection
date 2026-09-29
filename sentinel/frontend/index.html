@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sentinel — AI Banking Fraud Detection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;750;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z' fill='%235aa2ff'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+      </div>
+      <div>
+        <h1>Sentinel</h1>
+        <p>Real-time fraud detection &amp; response</p>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="seg" id="modeSeg">
+      <button data-mode="simple" class="active">Simple</button>
+      <button data-mode="analyst">Analyst</button>
+    </div>
+    <div class="livepill"><span class="pulse" id="pulse"></span><span id="livetxt">connecting…</span></div>
+  </header>
+
+  <div class="intro" id="intro">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+    <div><b>What you're looking at:</b> every card payment and transfer below is being scored in real time.
+    Sentinel decides to <b>allow</b>, <b>flag</b>, <b>ask for verification</b>, or <b>block</b> it — before the money moves.
+    Click any transaction for a plain-English explanation. Use <b>🎭 Simulate an attack</b> to see it react.</div>
+    <button class="x" id="introX">×</button>
+  </div>
+
+  <section class="hero" id="hero"></section>
+
+  <section class="policy" id="policy">
+    <h3>Rules and AI, working together</h3>
+    <div class="lead" id="policyLead">Scoring the same live traffic three ways.</div>
+    <div class="pbars" id="pbars"></div>
+  </section>
+
+  <div class="grid">
+    <div class="card">
+      <div class="hd"><h3>Live transactions</h3><span class="count" id="feedcount">0</span></div>
+      <details class="sim" id="sim" open>
+        <summary>Simulate an attack</summary>
+        <div class="body">
+          <div class="hint">Injects a fake fraud episode against a random customer so you can watch Sentinel respond over a few seconds.</div>
+          <div class="btns">
+            <button class="abtn" data-s="account_takeover">Account takeover</button>
+            <button class="abtn" data-s="card_testing">Card testing</button>
+            <button class="abtn" data-s="stolen_card_geo">Stolen card abroad</button>
+            <button class="abtn" data-s="bust_out">Bust-out</button>
+            <button class="abtn adv" data-s="amount_just_under">Just under the limit</button>
+            <button class="abtn adv" data-s="slow_drip">Slow drip</button>
+            <button class="abtn adv" data-s="geo_consistent_ato">Stealth takeover</button>
+          </div>
+          <div class="hint" style="margin-top:10px">Fraud ring: several customers sharing one device or mule account — the pattern the forensics graph is built to show.</div>
+          <div class="btns">
+            <button class="abtn ring" id="ringBtn" data-s="account_takeover">Inject a fraud ring (4 customers)</button>
+          </div>
+          <div class="simrow">
+            <span>speed</span><input type="range" id="rate" min="1" max="20" step="1" value="2" />
+            <b id="ratev">2/s</b>
+            <button class="ghost" id="pauseBtn">Pause</button>
+          </div>
+        </div>
+      </details>
+
+      <details class="sim" id="manual">
+        <summary>Add a real transaction</summary>
+        <div class="body">
+          <div class="hint">Enter an actual transaction by hand — a real purchase you or a judge want to test — and watch Sentinel score it live, exactly like the ambient traffic.</div>
+          <form id="manualForm" class="mform">
+            <div class="mrow">
+              <label>Customer ID<input type="text" id="mCust" placeholder="e.g. my_test_customer" required></label>
+              <label>Amount (₹)<input type="number" id="mAmount" placeholder="1200.00" min="0.01" step="0.01" required></label>
+            </div>
+            <div class="mrow">
+              <label>Merchant<input type="text" id="mMerchant" placeholder="e.g. Reliance Fresh"></label>
+              <label>Category<select id="mMcc">
+                <option value="grocery">Grocery</option>
+                <option value="retail" selected>Retail</option>
+                <option value="restaurant">Restaurant</option>
+                <option value="travel">Travel</option>
+                <option value="transport">Transport</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="wire_transfer">Wire transfer</option>
+              </select></label>
+            </div>
+            <div class="mrow">
+              <label>Channel<select id="mChannel">
+                <option value="pos">In-store (POS)</option>
+                <option value="online" selected>Online</option>
+                <option value="atm">ATM</option>
+                <option value="transfer">Transfer</option>
+              </select></label>
+              <label>City<input type="text" id="mCity" placeholder="e.g. Mumbai"></label>
+            </div>
+            <div class="mrow">
+              <label>Country<input type="text" id="mCountry" placeholder="IN" value="IN"></label>
+              <label>Customer age<input type="number" id="mAge" placeholder="leave blank if unknown" min="18" max="120" step="1"></label>
+            </div>
+            <div class="mrow">
+              <label>Device ID<input type="text" id="mDevice" placeholder="e.g. laptop-1 (leave blank for a new device)"></label>
+            </div>
+            <button type="submit" class="abtn" style="width:100%;margin-top:6px">Score this transaction</button>
+          </form>
+        </div>
+      </details>
+
+      <details class="sim" id="bulk">
+        <summary>Upload transactions (CSV)</summary>
+        <div class="body">
+          <div class="hint">Score a batch exported from your own system — up to 2,000 rows. Required columns: <code>cust_id</code>, <code>amount</code>.
+            Recommended: <code>timestamp</code>, <code>merchant</code>, <code>category</code>, <code>channel</code>, <code>city</code>, <code>device_id</code>, <code>cust_age</code>, and <code>is_fraud</code> if you know the outcome (Sentinel then reports how it did).
+            <a href="/upload/template.csv" download>Download a template</a>.</div>
+          <div class="upl">
+            <label class="fpick"><input type="file" id="bulkFile" accept=".csv,text/csv"><span id="bulkName">Choose a CSV file…</span></label>
+            <button class="ghost" id="bulkCheck" disabled>Check file</button>
+            <button class="abtn" id="bulkScore" disabled>Score all rows</button>
+          </div>
+          <div id="bulkOut"></div>
+        </div>
+      </details>
+
+      <details class="sim" id="replay">
+        <summary>Replay real transactions</summary>
+        <div class="body">
+          <div class="hint">Streams transactions from an independent dataset (its own amounts, merchants and fraud labels) through the same live pipeline — not Sentinel's own simulator. These datasets are generated, not real bank records; see <code>docs/REAL_DATA.md</code>. Buttons are disabled for datasets not present on this server.</div>
+          <div class="btns">
+            <button class="abtn replayBtn" data-schema="india_bank">Replay 100 Indian bank transactions</button>
+            <button class="abtn replayBtn" data-schema="upi">Replay 100 UPI-style transactions</button>
+            <button class="abtn replayBtn" data-schema="paysim">Replay 100 PaySim transactions</button>
+          </div>
+          <div class="hint" id="replayStatus"></div>
+          <div id="blendBlock">
+            <div class="hint" style="margin-top:10px">Or stream one combined feed — UPI-style dataset rows merged chronologically with fresh synthetic INR traffic, scored in a single timeline:</div>
+            <div class="btns">
+              <button class="abtn" id="blendBtn">Replay 100 blended (UPI-style + synthetic)</button>
+            </div>
+            <div class="hint" id="blendStatus"></div>
+          </div>
+        </div>
+      </details>
+      <div class="feed" id="feed"></div>
+    </div>
+
+    <div class="card">
+      <div class="hd"><h3>Selected transaction</h3></div>
+      <div class="detail" id="detail">
+        <div class="empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <div>Click a transaction to see why Sentinel decided what it did.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="agepanel" id="agePanel">
+    <div class="hd">
+      <div>
+        <h3>Who is being affected — by age</h3>
+        <div class="lead" id="ageLead">Fraud patterns and false alarms differ by age cohort. Refresh to recompute from live traffic.</div>
+      </div>
+      <button class="ghost" id="ageRefresh">Refresh</button>
+    </div>
+    <div id="ageBody" class="agebody"><div class="hint">Score some transactions, then hit Refresh.</div></div>
+  </section>
+
+  <section class="evalpanel" id="evalPanel">
+    <div class="hd">
+      <div>
+        <h3>How good is the model? — independent test</h3>
+        <div class="lead" id="evalLead">Scored on a held-out set of customers the model never saw during training.</div>
+      </div>
+    </div>
+    <div id="evalBody"><div class="hint">Loading evaluation report…</div></div>
+  </section>
+
+  <div class="charts analyst-only">
+    <div class="chartcard"><h3>Decisions over time</h3><canvas id="decChart"></canvas></div>
+    <div class="chartcard"><h3>Risk-score distribution</h3><canvas id="riskChart"></canvas></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cytoscape@3.30.1/dist/cytoscape.min.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

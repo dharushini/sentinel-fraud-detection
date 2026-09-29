@@ -1,0 +1,13 @@
+# Vercel function dependencies. Keep these IDENTICAL to the pins in the root
+# requirements.txt: scikit-learn/numpy/scipy/joblib must match the versions
+# that trained sentinel/artifacts/model.joblib, or the model can fail to
+# unpickle at cold start. (scikit-learn 1.8.0 needs Python >= 3.11; Vercel's
+# Python runtime is 3.12.)
+fastapi>=0.110
+scikit-learn==1.8.0
+numpy==2.4.4
+scipy==1.17.1
+joblib==1.5.3
+pydantic>=2.5
+redis>=5    # only used when SENTINEL_REDIS_URL is set
+groq>=0.11  # only used by /qa when GROQ_API_KEY is set

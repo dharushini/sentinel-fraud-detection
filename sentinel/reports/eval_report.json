@@ -1,0 +1,338 @@
+{
+  "generated_at": "2026-09-27T23:22:33+00:00",
+  "dataset": {
+    "kind": "held-out synthetic world (different seed from training)",
+    "seed": 1041,
+    "train_seed": 42,
+    "customers": 110,
+    "days": 35,
+    "transactions": 14151,
+    "fraud": 188,
+    "fraud_prevalence": 0.01329
+  },
+  "definition": "positive prediction = BLOCK or CHALLENGE; positive label = fraud",
+  "label_delay_hours": 72.0,
+  "operating_point": {
+    "block_risk": 0.9,
+    "challenge_risk": 0.55,
+    "review_risk": 0.28,
+    "model_probability_threshold": 0.0476
+  },
+  "confusion_matrix": {
+    "tp": 178,
+    "fp": 231,
+    "tn": 13732,
+    "fn": 10
+  },
+  "metrics": {
+    "precision": 0.43521,
+    "recall": 0.94681,
+    "specificity": 0.98346,
+    "false_positive_rate": 0.01654,
+    "false_negative_rate": 0.05319,
+    "f1": 0.59631,
+    "mcc": 0.63575,
+    "balanced_accuracy": 0.96513,
+    "accuracy": 0.98297
+  },
+  "confidence_intervals_95": {
+    "precision": [
+      0.39281,
+      0.48645
+    ],
+    "recall": [
+      0.91384,
+      0.97879
+    ],
+    "specificity": [
+      0.98145,
+      0.9855
+    ],
+    "f1": [
+      0.55197,
+      0.64385
+    ],
+    "false_positive_rate": [
+      0.0145,
+      0.01855
+    ]
+  },
+  "block_only": {
+    "confusion_matrix": {
+      "tp": 60,
+      "fp": 4,
+      "tn": 13959,
+      "fn": 128
+    },
+    "false_positive_rate": 0.00029,
+    "recall": 0.3191
+  },
+  "threshold_free": {
+    "roc_auc": 0.9732,
+    "pr_auc": 0.8143,
+    "pr_auc_baseline": 0.01329
+  },
+  "calibration": {
+    "ece": 0.00164,
+    "brier": 0.00407,
+    "table": [
+      {
+        "lo": 0.0,
+        "hi": 0.1,
+        "n": 13912,
+        "predicted": 0.0009,
+        "observed": 0.0013
+      },
+      {
+        "lo": 0.1,
+        "hi": 0.2,
+        "n": 34,
+        "predicted": 0.1111,
+        "observed": 0.3529
+      },
+      {
+        "lo": 0.2,
+        "hi": 0.3,
+        "n": 1,
+        "predicted": 0.2675,
+        "observed": 0.0
+      },
+      {
+        "lo": 0.4,
+        "hi": 0.5,
+        "n": 39,
+        "predicted": 0.4241,
+        "observed": 0.5128
+      },
+      {
+        "lo": 0.6,
+        "hi": 0.7,
+        "n": 53,
+        "predicted": 0.6667,
+        "observed": 0.6415
+      },
+      {
+        "lo": 0.8,
+        "hi": 0.9,
+        "n": 15,
+        "predicted": 0.8715,
+        "observed": 0.9333
+      },
+      {
+        "lo": 0.9,
+        "hi": 1.0,
+        "n": 97,
+        "predicted": 0.9667,
+        "observed": 0.9278
+      }
+    ]
+  },
+  "per_scenario": {
+    "account_takeover": {
+      "fraud": 23,
+      "caught": 23,
+      "recall": 1.0,
+      "adversarial": false
+    },
+    "amount_just_under": {
+      "fraud": 27,
+      "caught": 20,
+      "recall": 0.7407,
+      "adversarial": true
+    },
+    "bust_out": {
+      "fraud": 22,
+      "caught": 19,
+      "recall": 0.8636,
+      "adversarial": false
+    },
+    "card_testing": {
+      "fraud": 20,
+      "caught": 20,
+      "recall": 1.0,
+      "adversarial": false
+    },
+    "geo_consistent_ato": {
+      "fraud": 25,
+      "caught": 25,
+      "recall": 1.0,
+      "adversarial": true
+    },
+    "slow_drip": {
+      "fraud": 56,
+      "caught": 56,
+      "recall": 1.0,
+      "adversarial": true
+    },
+    "stolen_card_geo": {
+      "fraud": 15,
+      "caught": 15,
+      "recall": 1.0,
+      "adversarial": false
+    }
+  },
+  "per_age_bracket": [
+    {
+      "bracket": "18-25",
+      "transactions": 1929,
+      "fraud": 14,
+      "tp": 14,
+      "fp": 27,
+      "tn": 1888,
+      "fn": 0,
+      "recall": 1.0,
+      "false_positive_rate": 0.0141,
+      "precision": 0.3415
+    },
+    {
+      "bracket": "26-40",
+      "transactions": 5522,
+      "fraud": 109,
+      "tp": 106,
+      "fp": 86,
+      "tn": 5327,
+      "fn": 3,
+      "recall": 0.9725,
+      "false_positive_rate": 0.01589,
+      "precision": 0.5521
+    },
+    {
+      "bracket": "41-60",
+      "transactions": 3931,
+      "fraud": 20,
+      "tp": 20,
+      "fp": 64,
+      "tn": 3847,
+      "fn": 0,
+      "recall": 1.0,
+      "false_positive_rate": 0.01636,
+      "precision": 0.2381
+    },
+    {
+      "bracket": "60+",
+      "transactions": 2769,
+      "fraud": 45,
+      "tp": 38,
+      "fp": 54,
+      "tn": 2670,
+      "fn": 7,
+      "recall": 0.8444,
+      "false_positive_rate": 0.01982,
+      "precision": 0.413
+    }
+  ],
+  "fairness": {
+    "false_positive_rate_gap": 0.00572,
+    "recall_gap": 0.1556
+  },
+  "decision_mix": {
+    "ALLOW": 13575,
+    "REVIEW": 167,
+    "CHALLENGE": 345,
+    "BLOCK": 64
+  },
+  "money": {
+    "fraud_amount_inr": 192234.38,
+    "prevented_inr": 180071.92,
+    "prevented_share": 0.9367
+  },
+  "drift_psi_vs_training": 0.1454,
+  "drift_psi_after_warmup": 0.0258,
+  "training_meta": {
+    "roc_auc": 0.994,
+    "pr_auc": 0.9481,
+    "brier_calibrated": 0.00104,
+    "cost_threshold": 0.0476,
+    "split": "time-ordered 70/15/15 (valid=calibration, test=out-of-time)"
+  },
+  "label_timing_sensitivity": [
+    {
+      "outcomes_known": "instantly (upper bound)",
+      "recall": 0.98404,
+      "precision": 0.42627,
+      "false_positive_rate": 0.01783,
+      "pr_auc": 0.8564
+    },
+    {
+      "outcomes_known": "after 72 h (headline)",
+      "recall": 0.94681,
+      "precision": 0.43521,
+      "false_positive_rate": 0.01654,
+      "pr_auc": 0.8143
+    },
+    {
+      "outcomes_known": "never (no outcome data)",
+      "recall": 0.92553,
+      "precision": 0.5194,
+      "false_positive_rate": 0.01153,
+      "pr_auc": 0.7904
+    }
+  ],
+  "operating_points": [
+    {
+      "threshold": 0.0476,
+      "learned": true,
+      "recall": 0.94681,
+      "precision": 0.43521,
+      "false_positive_rate": 0.01654,
+      "block_fpr": 0.00029,
+      "false_alarms_per_fraud_caught": 1.297752808988764
+    },
+    {
+      "threshold": 0.08,
+      "learned": false,
+      "recall": 0.92021,
+      "precision": 0.6223,
+      "false_positive_rate": 0.00752,
+      "block_fpr": 0.00029,
+      "false_alarms_per_fraud_caught": 0.6069364161849711
+    },
+    {
+      "threshold": 0.15,
+      "learned": false,
+      "recall": 0.88298,
+      "precision": 0.64591,
+      "false_positive_rate": 0.00652,
+      "block_fpr": 0.00029,
+      "false_alarms_per_fraud_caught": 0.5481927710843374
+    },
+    {
+      "threshold": 0.3,
+      "learned": false,
+      "recall": 0.88298,
+      "precision": 0.64844,
+      "false_positive_rate": 0.00645,
+      "block_fpr": 0.00029,
+      "false_alarms_per_fraud_caught": 0.5421686746987951
+    },
+    {
+      "threshold": 0.5,
+      "learned": false,
+      "recall": 0.81915,
+      "precision": 0.67544,
+      "false_positive_rate": 0.0053,
+      "block_fpr": 0.0005,
+      "false_alarms_per_fraud_caught": 0.4805194805194805
+    }
+  ],
+  "policy_comparison": {
+    "rules_only": {
+      "detection_rate": 0.4149,
+      "false_positive_rate": 0.00029,
+      "caught": 78,
+      "fp": 4
+    },
+    "model_only": {
+      "detection_rate": 0.9255,
+      "false_positive_rate": 0.0,
+      "caught": 174,
+      "fp": 0
+    },
+    "full": {
+      "detection_rate": 0.9468,
+      "false_positive_rate": 0.00029,
+      "caught": 178,
+      "fp": 4
+    }
+  }
+}
