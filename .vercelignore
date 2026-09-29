@@ -1,0 +1,35 @@
+# Vercel upload exclusions — keep the deployment under the size limit.
+# NOTE: sentinel/artifacts/model.joblib is intentionally NOT excluded; the
+# pre-trained model must ship so the function boots without training.
+
+.venv/
+data/
+.git/
+.github/
+__pycache__/
+*.pyc
+.pytest_cache/
+tests/
+docs/
+node_modules/
+.DS_Store
+
+# runtime state — regenerated at runtime, never deploy
+sentinel/artifacts/state.snapshot
+sentinel/artifacts/feedback.jsonl
+sentinel/artifacts/queue.json
+
+# docs / infra not used by the Vercel function
+PITCH.md
+Dockerfile
+docker-compose.yml
+.dockerignore
+fly.toml
+render.yaml
+run.sh
+pytest.ini
+
+# Dev-only extras (shap, pytest, httpx). Vercel reads the slim root
+# requirements.txt; this file is for local dev and Docker only.
+requirements-dev.txt
+vercel-logs.json

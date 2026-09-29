@@ -1,0 +1,14 @@
+# One-click deploy on Render (free tier) — https://render.com
+# New > Blueprint > point at this repo. Gives a public https URL, WebSocket works.
+services:
+  - type: web
+    name: sentinel
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: "8000"
+      # optional: attach a free Render Redis and set SENTINEL_REDIS_URL to share
+      # warm state across instances

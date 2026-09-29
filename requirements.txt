@@ -1,0 +1,22 @@
+# Runtime dependencies — deployable everywhere, including serverless.
+# Counterfactual explanations use the existing classifier and require no extra
+# explanation package.
+#
+# scikit-learn / numpy / scipy / joblib are PINNED EXACTLY to the versions
+# that trained and pickled sentinel/artifacts/model.joblib. scikit-learn's
+# internal module layout is not stable across releases (even minor ones), so
+# an unpinned range such as scikit-learn>=1.4 can silently resolve to a newer
+# version that fails to unpickle the committed model at startup
+# (ModuleNotFoundError: No module named '_loss' or similar). If you retrain
+# the model with a different scikit-learn version, update these pins to match.
+fastapi>=0.110
+uvicorn[standard]>=0.27
+scikit-learn==1.8.0
+numpy==2.4.4
+scipy==1.17.1
+joblib==1.5.3
+pydantic>=2.5
+groq>=0.11  # natural-language Q&A on a scored case (/qa) — needs GROQ_API_KEY set; the
+            # rest of the app runs fully offline without it (see docs/QA_SETUP.md)
+redis>=5    # queue/feedback/state persistence across instances — needs SENTINEL_REDIS_URL set;
+            # falls back to local disk automatically if unset (fine for local dev / single-host)

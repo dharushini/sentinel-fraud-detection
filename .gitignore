@@ -1,0 +1,23 @@
+.venv/
+__pycache__/
+*.pyc
+data/
+.pytest_cache/
+.DS_Store
+.vercel/
+
+# runtime state — never commit
+sentinel/artifacts/state.snapshot
+sentinel/artifacts/feedback.jsonl
+# a pre-trained model IS committed so cloud deploys start instantly
+!sentinel/artifacts/
+!sentinel/artifacts/model.joblib
+.vercel
+
+# secrets — never commit
+.env
+sentinel/artifacts/queue.json
+
+# raw Kaggle datasets — too large for git, re-download via sentinel/datasets/fetch.py
+fraudTest.csv
+fraudTrain.csv

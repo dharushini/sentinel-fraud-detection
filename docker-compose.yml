@@ -1,0 +1,21 @@
+# Two stateless Sentinel workers sharing one warm behavioural state via Redis.
+#   docker compose up --scale sentinel=2
+services:
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  sentinel:
+    build: .
+    environment:
+      SENTINEL_REDIS_URL: redis://redis:6379/0
+    ports:
+      - "8000:8000"
+    depends_on:
+      redis:
+        condition: service_healthy
